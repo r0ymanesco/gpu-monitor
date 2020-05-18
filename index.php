@@ -200,7 +200,7 @@ foreach ($HOSTS as $hostname => $hosttitle) {
     // USAGE OF LOCAL DISK
     $disk_usage = array();
     foreach(file('data/'.$hostname.'_local.txt') as $local_usage) {
-        if (preg_match("#^([0-9,]+)([KMGT])\s*/local/(\w+)$#", $local_usage, $matches)) {
+        if (preg_match("#^([0-9.]+)([KMGT])\s*/home/(\w+)$#", $local_usage, $matches)) {
             $multiplier = 1;
             if ($matches[2] == "K") $multiplier = 0.001 * 0.001;
             if ($matches[2] == "M") $multiplier = 0.001;

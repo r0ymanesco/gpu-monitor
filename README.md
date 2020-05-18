@@ -26,6 +26,13 @@ Ideally, on the machines you want to monitor, use the following cron jobs:
 0 */2 * * * /SCRIPT-LOCATION/gpu-check.sh kill > /dev/null 2>&1; /SCRIPT-LOCATION/gpu-check.sh HOSTNAME > /dev/null 2>&1
 ```
 
+for disk usage, also add this to the **root** cron job:
+
+```
+*/10 * * * * du -sh /home/* > /tmp/gpuReadings/HOSTNAME_local.txt
+
+```
+
 ### Web interface setup
 
 To setup the web interface, you just need to put the files of the repo (except `scripts` folder) on the www space of a web server that supports PHP.
