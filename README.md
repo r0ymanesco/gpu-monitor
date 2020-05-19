@@ -21,15 +21,15 @@ Ideally, on the machines you want to monitor, use the following cron jobs:
 ```
 # Edit full-caps infos below
 # Check if monitoring running each 5 min
-*/5 * * * * /SCRIPT-LOCATION/gpu-check.sh HOSTNAME > /dev/null 2>&1
+*/5 * * * * /SCRIPT-LOCATION/gpu-check.sh HOSTNAME HTTP_SERVER: > /dev/null 2>&1
 # Kill and restart the monitoring each 2 hours to cleanup the ouptput files of the monitors
-0 */2 * * * /SCRIPT-LOCATION/gpu-check.sh kill > /dev/null 2>&1; /SCRIPT-LOCATION/gpu-check.sh HOSTNAME > /dev/null 2>&1
+0 */2 * * * /SCRIPT-LOCATION/gpu-check.sh kill > /dev/null 2>&1; /SCRIPT-LOCATION/gpu-check.sh HOSTNAME HTTP_SERVER: > /dev/null 2>&1
 ```
 
 for disk usage, also add this to the **root** cron job:
 
 ```
-*/10 * * * * du -sh /home/* > /tmp/gpuReadings/HOSTNAME_local.txt
+*/10 * * * * du -sh /home/* > /tmp/gpuReadings/local_usage.txt
 
 ```
 
