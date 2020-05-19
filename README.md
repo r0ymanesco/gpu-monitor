@@ -29,7 +29,7 @@ Ideally, on the machines you want to monitor, use the following cron jobs:
 for disk usage, also add this to the **root** cron job:
 
 ```
-*/10 * * * * du -sh /home/* > /tmp/gpuReadings/local_usage.txt
+*/10 * * * * du -sh /home/* > /tmp/gpuReadings/local-usage.txt
 
 ```
 
