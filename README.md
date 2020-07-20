@@ -14,9 +14,13 @@ Put the files that are in the `scripts` folder on the machines you want to monit
 * `gpu-processes.py` is what's ran by task 3
 * `gpu-check.sh <hostname>` checks if the 3 tasks are running, if not it will launch them in the background. Also `gpu-check.sh kill` will stop the tasks if running.
 
-Just edit `gpu-run.sh` to change the `scp` command that is in it so that it sends file to the right location (i.e. the `data` folder of the _www_ location of the web monitor). If you do need scp, make sure you have an SSH keys setup so that we can do passwordless copy.
+Edit the following files:
+1. `gpu-check.sh`: change the directory `/home/USER/gpu-monitor/scripts/gpu-run.sh` to where you've put the script. Remember to change all 3 instances of this.
+2. `gpu-run.sh`: change the directory `/home/USER/gpu-monitor/scripts/gpu-processes.py` to where you've put the python file. There is only one instance of this.
 
-Ideally, on the machines you want to monitor, use the following cron jobs:
+Next, setup SSH keys between the host server (the server to be monitored) and the website server (the server hosting the website). Follow the instructions here: https://www.redhat.com/sysadmin/passwordless-ssh. Remember not to set a password for the key.
+
+Add the following cron jobs to your user ("crontab -e" then copy the following bit into the file):
 
 ```
 # Edit full-caps infos below
@@ -26,12 +30,13 @@ Ideally, on the machines you want to monitor, use the following cron jobs:
 0 */2 * * * /SCRIPT-LOCATION/gpu-check.sh kill > /dev/null 2>&1; /SCRIPT-LOCATION/gpu-check.sh HOSTNAME HTTP_SERVER: > /dev/null 2>&1
 ```
 
-for disk usage, also add this to the **root** cron job:
+for disk usage, also add this to the **root** cron job ("sudo crontab -e"):
 
 ```
 */10 * * * * du -sh /home/* > /tmp/local-usage.txt
 
 ```
+To get things running, run `gpu-check.sh <hostname> <http servername>:`. Don't forget the colon at the end.
 
 ### Web interface setup
 
